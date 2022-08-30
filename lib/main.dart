@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mon_projet/home/home.dart';
+import 'package:mon_projet/jeu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0XFF4584FF),
       ),
-      home: const MyHomePage(),
+      home: const JeuDesScreen(),
     );
   }
 }
