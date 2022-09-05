@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class MyHomeApi extends StatefulWidget {
-  const MyHomeApi({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomeApi({Key? key}) : super(key: key);
+
   @override
   State<MyHomeApi> createState() => _MyHomeApiState();
 }
 
 class _MyHomeApiState extends State<MyHomeApi> {
-  String apiKey = 'Your Key';
+  String apiKey = '007522e5d41a78a1cfe3f2af6a318b23';
   double lat = 40.7128;
   double lon = 74.0060;
 
@@ -18,7 +18,7 @@ class _MyHomeApiState extends State<MyHomeApi> {
     final httpsUri = Uri.http('api.openweathermap.org', '/data/2.5/weather', {
       'lat': '$lat',
       'lon': '$lon',
-      'appid': '007522e5d41a78a1cfe3f2af6a318b23',
+      'appid': apiKey,
     });
 
     var request = await http.get(httpsUri);
@@ -56,59 +56,62 @@ class _MyHomeApiState extends State<MyHomeApi> {
   @override
   Widget build(BuildContext context) {
     //var city = getData();
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Get City and Weather'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome to ${city.toString()} city!',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            Text(
-              description.toString(),
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            TextButton(
-              onPressed: () {
-                getCityName().then((String result) {
-                  setState(() {
-                    city = result;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Météo'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Welcome to ${city.toString()} city!',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Text(
+                description.toString(),
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              TextButton(
+                onPressed: () {
+                  getCityName().then((String result) {
+                    setState(() {
+                      city = result;
+                    });
                   });
-                });
-                getWeather().then((String result) {
-                  setState(() {
-                    description = result;
+                  getWeather().then((String result) {
+                    setState(() {
+                      description = result;
+                    });
                   });
-                });
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.red),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                   ),
                 ),
-              ),
-              child: const Text(
-                'Get City and Current Weather',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+                child: const Text(
+                  'Get City and Current Weather',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
+        // This trailing comma makes auto-formatting nicer for build methods.
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
